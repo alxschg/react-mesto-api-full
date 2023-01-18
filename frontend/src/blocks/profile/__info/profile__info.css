@@ -1,0 +1,23 @@
+.profile__info{
+    max-width: 425px;
+    display: grid;
+    grid-template-columns: 1fr 24px;
+    column-gap: 18px;
+    row-gap: 15px;
+    color: white;
+    align-self: center;
+    grid-template-areas:
+    "title button"
+    "description .";
+}
+
+@media screen and (max-width: 768px) {
+    .profile__info{
+    max-width: 300px;
+    column-gap: 10px;
+    margin-bottom: 36px;
+    grid-template-areas:
+    "title button"
+    "description descriptions";
+    }
+}
