@@ -7,6 +7,7 @@ const { ConflictError } = require('../errors/ConflictError');
 const { ValidationError } = require('../errors/ValidationError');
 
 const SALT_LENGTH = 10;
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 async function getUser(req, res, next) {
   try {
@@ -130,7 +131,7 @@ const login = (req, res, next) => {
         .then((matched) => {
           if (!matched) {
             throw new UnauthorizedError('Неправильная почта или пароль');
-          } const token = jwt.sign({ _id: user._id }, 'secretkey', { expiresIn: '7d' });
+          } const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
           res.send({ jwt: token });
         });
     })
