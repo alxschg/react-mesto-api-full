@@ -12,3 +12,6 @@
 `backend/` - часть приложения, написанная на NodeJS.
 
 `frontend/` - часть приложения, написанная на React.
+
+### Ссылка на репозиторий
+https://github.com/alxschg/express-mesto-gha
