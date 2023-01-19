@@ -100,11 +100,13 @@ function App() {
   }
 
   function onLogin(email, password) {
+    const token = localStorage.getItem("token");
     authorization(password, email)
       .then((res) => {
         if (res) {
           setEmail(email);
           setIsLogged(true);
+          api._headers.authorization = `Bearer ${token}`;
           history("/");
           localStorage.setItem("jwt", res.token);
         }
