@@ -3,9 +3,9 @@
 
 ## Адрес
 
-IP  130.193.51.160
-Frontend  https://mesto.alxschg.nomoredomains.rocks/
-Backend  https://api.mesto.alxschg.nomoredomains.rocks/
+* IP  130.193.51.160
+* Frontend  https://mesto.alxschg.nomoredomains.rocks/
+* Backend  https://api.mesto.alxschg.nomoredomains.rocks/
 
 ## Структура проекта
 
