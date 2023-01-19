@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
+const cors = require('cors');
 
 const { routes } = require('./routes');
 const { handleError } = require('./middlewares/handleError');
@@ -20,6 +21,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb')
     console.error(err);
   });
 
+app.use(cors());
 app.use(requestLogger);
 
 app.get('/crash-test', () => {
