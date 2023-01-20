@@ -9,6 +9,11 @@ const { handleError } = require('./middlewares/handleError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
+const allowedOrigins = [
+  'http://mesto.alxschg.nomoredomains.rocks',
+  'https://mesto.alxschg.nomoredomains.rocks',
+];
+
 const app = express();
 mongoose.set('strictQuery', false);
 
@@ -21,7 +26,18 @@ mongoose.connect('mongodb://localhost:27017/mestodb')
     console.error(err);
   });
 
-app.use(cors());
+app.use(cors({
+  origin(origin, callback) {
+    // allow requests with no origin
+    // (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+}));
 app.use(requestLogger);
 
 app.get('/crash-test', () => {
