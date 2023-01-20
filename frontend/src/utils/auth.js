@@ -9,6 +9,7 @@ function getResponse(res) {
 
 export const register = (password, email) => {
   return fetch(`${BASE_URL}/signup`, {
+    mode: 'no-cors',
     method: 'POST',
     headers: {
       'Accept': 'application/json',
