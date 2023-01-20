@@ -11,7 +11,7 @@ const routes = express.Router();
 routes.all('*', express.json());
 
 routes.post(
-  '/signup',
+  'signup',
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().required().email(),
@@ -24,7 +24,7 @@ routes.post(
   createUser,
 );
 routes.post(
-  '/signin',
+  'signin',
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().required().email(),
@@ -34,8 +34,8 @@ routes.post(
   login,
 );
 
-routes.use('/users', auth, users);
-routes.use('/cards', auth, cards);
+routes.use('users', auth, users);
+routes.use('cards', auth, cards);
 
 routes.all('*', auth, (req, res, next) => {
   next(new NotFoundError('Неверный адрес запроса'));
