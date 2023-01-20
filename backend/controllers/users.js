@@ -121,22 +121,37 @@ async function updateAvatar(req, res, next) {
   }
 }
 
-const login = (req, res, next) => {
-  const { email, password } = req.body;
-  User.findOne({ email }).select('+password')
-    .then((user) => {
-      if (user === null) {
-        throw new UnauthorizedError('Неправильная почта или пароль');
-      } return bcrypt.compare(password, user.password)
-        .then((matched) => {
-          if (!matched) {
-            throw new UnauthorizedError('Неправильная почта или пароль');
-          } const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
-          res.send({ jwt: token });
-        });
-    })
-    .catch(next);
-};
+async function login(req, res, next) {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email }).select('+password');
+
+    if (!user) {
+      throw new UnauthorizedError('Неверные данные для входа');
+    }
+
+    const hasRightPassword = await bcrypt.compare(password, user.password);
+
+    if (!hasRightPassword) {
+      throw new UnauthorizedError('Неверные данные для входа');
+    }
+
+    const token = jwt.sign(
+      {
+        _id: user._id,
+      },
+      NODE_ENV === 'production' ? JWT_SECRET : 'secretkey',
+      {
+        expiresIn: '7d',
+      },
+    );
+
+    res.send({ token });
+  } catch (err) {
+    next(err);
+  }
+}
 
 module.exports = {
   getUser,
