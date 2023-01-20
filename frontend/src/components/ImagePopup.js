@@ -1,21 +1,29 @@
 function ImagePopup({ card, onClose }) {
+  function handleOverlayClick(event) {
+    if (event.target === event.currentTarget) onClose(event);
+  }
+
   return (
     <div
-      id="image-card"
-      className={`popup popup_overlay ${card ? `popup_is-opened` : ""}`}
+      className={`popup popup_type_image` + (card !== null && " popup_opened")}
+      onClick={handleOverlayClick}
     >
-      <div className="popup__image-container">
-        <figure className="popup__image-box">
-          <img className="popup__image" src={card?.link} alt={card?.name} />
-          <figcaption className="popup__image-text">{card?.name}</figcaption>
-        </figure>
+      <figure className="popup__image-container">
+        <img
+          src={card !== null ? card.link : "#"}
+          alt={card !== null ? card.name : "#"}
+          className="popup__image"
+        />
+        <figcaption className="popup__image-caption">
+          {card !== null ? card.name : "#"}
+        </figcaption>
         <button
+          className="popup__cancel-button"
           type="button"
-          className="popup__close  popup__close_image"
-          aria-label="Закрыть"
+          aria-label="Закрыть окно"
           onClick={onClose}
         ></button>
-      </div>
+      </figure>
     </div>
   );
 }

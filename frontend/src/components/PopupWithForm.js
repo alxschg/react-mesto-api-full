@@ -1,26 +1,40 @@
-function PopupWithForm({ name, isOpen, title, onClose, children, buttonText, onSubmit }) {
+function PopupWithForm({
+  name,
+  title,
+  buttonText,
+  isOpen,
+  onClose,
+  children,
+  onSubmit,
+}) {
+  function handleOverlayClick(event) {
+    if (event.target === event.currentTarget) onClose(event);
+  }
+
   return (
-    <div id={name} className={`popup ${isOpen ? `popup_is-opened` : ""}`}>
-      <div className="popup__form">
+    <div
+      className={`popup popup_type_${name}` + (isOpen && " popup_opened")}
+      onClick={handleOverlayClick}
+    >
+      <div className="popup__container content__element">
         <h2 className="popup__title">{title}</h2>
+        <form
+          className="popup__form"
+          name={name}
+          noValidate
+          onSubmit={onSubmit}
+        >
+          {children}
+          <button className="popup__save-button" type="submit">
+            {buttonText}
+          </button>
+        </form>
         <button
+          className="popup__cancel-button"
           type="button"
-          className="popup__close"
-          aria-label="Закрыть"
+          aria-label="Закрыть окно"
           onClick={onClose}
         ></button>
-        <form name={name} className="form" onSubmit={onSubmit}>
-          <fieldset className="popup__fieldset">
-            {children}
-            <button
-              type="submit"
-              className="popup__button-save"
-              aria-label="Создать"
-            >
-              {buttonText}
-            </button>
-          </fieldset>
-        </form>
       </div>
     </div>
   );

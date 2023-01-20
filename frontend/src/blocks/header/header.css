@@ -1,29 +1,18 @@
-.header{
-    display: flex;
-    justify-content: space-between;
-    max-width: 880px;
-    height: 120px;
-    margin: 0 auto 40px;
-    padding-top: 45px;
-    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
-    box-sizing: border-box;
+.header {
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  /* Расположение элементов */
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-areas: "logo menu";
+  justify-items: end;
+  align-items: center;
 }
 
-@media screen and (max-width: 1150px) {
-    .header{
-    width: calc(100% - 200px);
-    }
-}
-
-@media screen and (max-width: 950px) {
-    .header{
-    width: 100%;
-    }
-}
-
-@media screen and (max-width: 426px) {
-    .header{
-    min-height: 56px;
-    margin-top: 28px;
-    }
+@media (max-width: 768px) {
+  .header_wrappable {
+    /* Сворачивающееся меню */
+    grid-template-areas:
+      "menu menu"
+      "logo button";
+  }
 }

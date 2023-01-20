@@ -1,16 +1,15 @@
-import { useLocation } from "react-router-dom";
-
 function Footer() {
-  const location = useLocation();
-  if (location.pathname === "/") {
-    return (
-      <footer className="footer">
-        <p className="footer__project">
-          © {new Date().getFullYear()} Mesto Russia
-        </p>
-      </footer>
-    );
-  }
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+
+  return (
+    <footer className="footer content__element">
+      <p className="footer__copyright">
+        &copy;&nbsp;{currentYear <= 2022 ? "2022" : `2022&ndash;${currentYear}`}{" "}
+        Студенты Яндекс.Практикума
+      </p>
+    </footer>
+  );
 }
 
 export default Footer;

@@ -1,54 +1,56 @@
-import logo from "../images/logo.svg";
-import { useLocation, Link } from "react-router-dom";
+import React from "react";
 
-function Header({ email, onLogout }) {
-  const location = useLocation();
-  if (location.pathname === "/") {
-    return (
-      <header className="header">
-        <img className="header__logo" src={logo} alt="logo" />
+import logo from "../images/header__logo_light.svg";
 
-        <nav>
-          <ul className="header__links">
-            <p className="header__email">{email}</p>
-            <button href="#" className="header__button" onClick={onLogout}>
-              Выйти
-            </button>
+function Header({ children, isWrappable }) {
+  const [isMenuOpened, setIsMenuOpened] = React.useState(false);
+
+  function handleOpenMenu() {
+    setIsMenuOpened((state) => !state);
+  }
+
+  return (
+    <header
+      className={
+        "header content__element content__element_type_header" +
+        (isWrappable ? " header_wrappable" : "")
+      }
+    >
+      <img
+        src={logo}
+        alt="Сервис Место-Россия. Логотип"
+        className="header__logo"
+      />
+
+      {isWrappable && (
+        <button
+          type="button"
+          className={
+            "header__menu-button" +
+            (isMenuOpened ? " header__menu-button_opened" : "")
+          }
+          aria-label="Открыть меню"
+          onClick={handleOpenMenu}
+        ></button>
+      )}
+
+      {children && (
+        <nav
+          className={
+            "header__menu" + (isMenuOpened ? " header__menu_opened" : "")
+          }
+        >
+          <ul className="header__menu-list">
+            {(children.length > 1 ? children : [children]).map((item, pos) => (
+              <li className="header__menu-item" key={pos}>
+                {item}
+              </li>
+            ))}
           </ul>
         </nav>
-      </header>
-    );
-  }
-  if (location.pathname === "/sign-up") {
-    return (
-      <header className="header">
-        <img className="header__logo" src={logo} alt="logo" />
-
-        <nav>
-          <ul className="header__links">
-            <Link to="/sign-in" className="header__button">
-              Войти
-            </Link>
-          </ul>
-        </nav>
-      </header>
-    );
-  }
-  if (location.pathname === "/sign-in") {
-    return (
-      <header className="header">
-        <img className="header__logo" src={logo} alt="logo" />
-
-        <nav>
-          <ul className="header__links">
-            <Link to="/sign-up" className="header__button">
-              Регистрация
-            </Link>
-          </ul>
-        </nav>
-      </header>
-    );
-  }
+      )}
+    </header>
+  );
 }
 
 export default Header;

@@ -1,3 +1,4 @@
-.popup__image-container{
-    position: relative;
+.popup__image-container {
+  position: relative;
+  margin: 0;
 }

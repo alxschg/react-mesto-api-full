@@ -1,66 +1,73 @@
-import {useState, useEffect} from "react";
+import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
+function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+  const [name, setName] = React.useState("");
+  const [link, setLink] = React.useState("");
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
-  const [imageName, setName] = useState('');
-  const [imageLink, setLink] = useState("");
+  /**
+   * Сброс значений инпутов при открытии/закрытии попапа
+   */
+  React.useEffect(() => {
+    setName("");
+    setLink("");
+  }, [isOpen]);
 
   function handleChangeName(event) {
-    setName(event.target.value);
+    const text = event.target.value;
+    setName(text);
   }
 
   function handleChangeLink(event) {
-    setLink(event.target.value);
+    const text = event.target.value;
+    setLink(text);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
     onAddPlace({
-      imageName,
-      imageLink,
+      name,
+      link,
     });
   }
-  
-  useEffect(() => {
-    setName('');
-    setLink('');
-  }, [isOpen])
 
   return (
     <PopupWithForm
-      name="create-card"
+      name="add-card"
       title="Новое место"
-      buttonText={isLoading? 'Создание...' : 'Создать'}
+      buttonText="Создать"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
     >
-      <input
-        name="imageName"
-        id="imageName"
-        type="text"
-        placeholder="Название"
-        minLength="2"
-        maxLength="30"
-        required
-        className="popup__input popup__input_type_name"
-        value={imageName}
-        onChange={handleChangeName}
-      />
-      <span id="imageName-error" className="popup__input-error"></span>
-
-      <input
-        name="imageLink"
-        id="imageLink"
-        type="url"
-        placeholder="Ссылка на картинку"
-        required
-        className="popup__input popup__input_type_job"
-        value={imageLink}
-        onChange={handleChangeLink}
-      />
-      <span id="imageLink-error" className="popup__input-error"></span>
+      <label className="popup__field">
+        <input
+          type="text"
+          className="popup__input popup__input_type_title"
+          id="title-input"
+          placeholder="Название"
+          name="name"
+          minLength="2"
+          maxLength="30"
+          required
+          value={name}
+          onChange={handleChangeName}
+        />
+        <span className="popup__input-error title-input-error"></span>
+      </label>
+      <label className="popup__field">
+        <input
+          type="url"
+          className="popup__input popup__input_type_link"
+          id="link-input"
+          placeholder="Ссылка на картинку"
+          name="link"
+          required
+          value={link}
+          onChange={handleChangeLink}
+        />
+        <span className="popup__input-error link-input-error"></span>
+      </label>
     </PopupWithForm>
   );
 }

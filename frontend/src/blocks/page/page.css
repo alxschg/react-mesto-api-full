@@ -1,12 +1,14 @@
-.page{
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    -moz-text-size-adjust: 100%;
-    text-rendering: optimizeLegibility;
-    background-color: black;
-    width: 100%;
-    min-height: 100vh;
-    font-family: "Inter", "Arial ", sans-serif;
+/* Общий блок для всего содержимого */
+.page {
+  /* Шрифт для всей страницы */
+  font-family: 'Inter', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  /* Цвета страницы */
+  background-color: #000;
+  color: #fff;
 }
