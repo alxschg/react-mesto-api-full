@@ -18,8 +18,6 @@ function Card({ card, likes, onCardClick, onCardLike, onCardDelete }) {
 
   function handleClick() {
     onCardClick(card);
-    console.log(card.owner._id);
-    console.log(currentUser._id);
   }
 
   function handleLikeClick() {

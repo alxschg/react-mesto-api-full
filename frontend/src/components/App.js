@@ -104,11 +104,12 @@ function App() {
     authorization(password, email)
       .then((res) => {
         if (res) {
+          api.setToken(res.token);
           setEmail(email);
           setIsLogged(true);
           api._headers.authorization = `Bearer ${token}`;
           history("/");
-          localStorage.setItem("jwt", res.token);
+          localStorage.setItem("token", res.token);
         }
       })
       .catch(() => {
@@ -118,13 +119,13 @@ function App() {
   }
 
   function handleLogout() {
-    localStorage.removeItem("jwt");
+    localStorage.removeItem("token");
     history("/sign-in");
     setIsLogged(false);
   }
 
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem("token");
     if (token) {
       validityToken(token)
         .then((res) => {

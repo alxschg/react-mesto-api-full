@@ -3,6 +3,10 @@ class Api {
         this._baseUrl = options.baseUrl;
         this._headers = options.headers;
     }
+
+    setToken(token) {
+        this._headers.authorization = `Bearer ${token}`;
+      }
   
     _checkResponse(res){
         if (res.ok) {
@@ -14,6 +18,7 @@ class Api {
     getUserInfo(){
         return fetch(`${this._baseUrl}/users/me`,
         {
+            method: "GET",
             headers: this._headers
         })
         .then(res => this._checkResponse(res))
@@ -21,6 +26,7 @@ class Api {
 
     getCards(){
         return fetch(`${this._baseUrl}/cards`,{
+            method: "GET",
             headers: this._headers
         })
         .then(res => this._checkResponse(res))
@@ -96,7 +102,7 @@ class Api {
   }
   
   const api = new Api({
-    baseUrl: 'https://api.mesto.alxschg.nomoredomains.rocks/',
+    baseUrl: 'https://api.mesto.alxschg.nomoredomains.rocks',
     headers: {
       'Content-Type': 'application/json'
     }
