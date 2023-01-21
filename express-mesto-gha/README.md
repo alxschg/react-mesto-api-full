@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+[![Tests](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-13-sprint.yml) [![Tests](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-14-sprint.yml)
+>>>>>>> 7129c89ad978f3ebc849a582ae94904044ccf043
 # Проект Mesto фронтенд + бэкенд
 
 
