@@ -1,0 +1,5 @@
+.popup__image-box{
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
