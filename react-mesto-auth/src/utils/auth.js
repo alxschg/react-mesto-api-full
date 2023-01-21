@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://auth.nomoreparties.co';
+export const BASE_URL = 'https://api.mesto.alxschg.nomoredomains.rocks/';
 
 function getResponse(res) {
     if(res.ok) {
@@ -14,6 +14,7 @@ export const register = (password, email) => {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
+    credentials: 'include',
     body: JSON.stringify({password, email})
   })
   .then((res) => {
@@ -29,6 +30,7 @@ export const authorization = (password, email) => {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
+    credentials: 'include',
     body: JSON.stringify({password, email})
   })
   .then((res) => {
@@ -39,6 +41,7 @@ export const authorization = (password, email) => {
 export const validityToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
+    credentials: 'include',
     headers: {
       "Content-Type": "application/json",
       "Authorization" : `Bearer ${token}`
