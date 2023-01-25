@@ -37,7 +37,7 @@ routes.post(
 routes.use('/users', auth, users);
 routes.use('/cards', auth, cards);
 
-routes.all('*', (req, res, next) => {
+routes.all('*', auth, (req, res, next) => {
   next(new NotFoundError('Карточка или пользователь не найден или был запрошен несуществующий роут'));
 });
 
