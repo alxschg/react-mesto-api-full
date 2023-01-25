@@ -22,8 +22,6 @@ mongoose.connect('mongodb://localhost:27017/mestodb')
     console.error(err);
   });
 
-app.use(express.static(path.join(__dirname, '../frontend/build')));
-
 app.use(cors());
 
 app.use(requestLogger);
