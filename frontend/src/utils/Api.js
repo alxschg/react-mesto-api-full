@@ -104,7 +104,7 @@ class Api {
   }
   
   const api = new Api({
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'http://https://mesto.alxschg.nomoredomains.rocks',
     headers: {
       'Content-Type': 'application/json'
     }

@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'http://https://mesto.alxschg.nomoredomains.rocks';
 
 function getResponse(res) {
     if(res.ok) {
