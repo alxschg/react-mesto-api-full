@@ -100,7 +100,6 @@ function App() {
           setIsLogged(true);
           history("/");
           localStorage.setItem("jwt", res.token);
-          console.log(`ТОКЕН ПРИ РЕГЕ ${res.token}`);
         }
       })
       .catch(() => {
