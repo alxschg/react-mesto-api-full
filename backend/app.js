@@ -3,7 +3,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const cors = require('cors');
-const path = require('path');
 
 const { routes } = require('./routes');
 const { handleError } = require('./middlewares/handleError');
