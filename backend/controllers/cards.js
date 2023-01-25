@@ -32,13 +32,13 @@ async function deleteCard(req, res, next) {
     const card = await Card.findById(cardId).populate('owner').populate('likes');
 
     if (!card) {
-      throw new NotFoundError('Карточка не найдена');
+      throw new NotFoundError('Карточка или пользователь не найден или был запрошен несуществующий роут');
     }
     const ownerId = card.owner.id;
     const userId = req.user._id;
 
     if (ownerId !== userId) {
-      throw new OwnerError('Нельзя удалить чужую карточку');
+      throw new OwnerError('Попытка удалить чужую карточку');
     }
 
     await Card.findByIdAndRemove(cardId);
@@ -58,12 +58,12 @@ async function deleteLike(req, res, next) {
       { new: true },
     ).populate('owner').populate('likes');
     if (!card) {
-      throw new NotFoundError('Карточка не найдена');
+      throw new NotFoundError('Карточка или пользователь не найден или был запрошен несуществующий роут');
     }
     res.send(card);
   } catch (err) {
     if (err.name === 'CastError') {
-      next(new ValidationError('Неверные данные'));
+      next(new ValidationError('Переданы некорректные данные в методы создания карточки, пользователя, обновления аватара пользователя или профиля'));
       return;
     }
     next(err);
@@ -79,12 +79,12 @@ async function putLike(req, res, next) {
       { new: true },
     ).populate('owner').populate('likes');
     if (!card) {
-      throw new NotFoundError('Карточка не найдена');
+      throw new NotFoundError('Карточка или пользователь не найден или был запрошен несуществующий роут');
     }
     res.send(card);
   } catch (err) {
     if (err.name === 'CastError') {
-      next(new ValidationError(`Неверные данные в  ${err.path}`));
+      next(new ValidationError('Переданы некорректные данные в методы создания карточки, пользователя, обновления аватара пользователя или профиля'));
       return;
     }
     next(err);

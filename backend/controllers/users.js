@@ -13,12 +13,12 @@ async function getUser(req, res, next) {
     const { userId } = req.params;
     const user = await User.findById(userId);
     if (!user) {
-      throw new NotFoundError('Пользователь не найден');
+      throw new NotFoundError('Карточка или пользователь не найден или был запрошен несуществующий роут');
     }
     res.send(user);
   } catch (err) {
     if (err.name === 'CastError') {
-      next(new ValidationError('Неверные данные'));
+      next(new ValidationError('Переданы некорректные данные в методы создания карточки, пользователя, обновления аватара пользователя или профиля'));
       return;
     }
     next(err);
@@ -40,7 +40,7 @@ async function getCurrentUser(req, res, next) {
     const user = await User.findById(userId);
 
     if (!user) {
-      throw new NotFoundError('Пользователь не найден');
+      throw new NotFoundError('Карточка или пользователь не найден или был запрошен несуществующий роут');
     }
 
     res.send(user);
@@ -73,7 +73,7 @@ async function createUser(req, res, next) {
     res.status(201).send(user);
   } catch (err) {
     if (err.code === 11000) {
-      next(new ConflictError('Пользователь с таким email уже существует'));
+      next(new ConflictError('При регистрации указан email, который уже существует на сервере'));
       return;
     }
     next(err);
@@ -91,7 +91,7 @@ async function updateUser(req, res, next) {
     );
 
     if (!user) {
-      throw new NotFoundError('Пользователь не найден');
+      throw new NotFoundError('Карточка или пользователь не найден или был запрошен несуществующий роут');
     }
 
     res.send(user);
@@ -111,7 +111,7 @@ async function updateAvatar(req, res, next) {
     );
 
     if (!user) {
-      throw new NotFoundError('Пользователь не найден');
+      throw new NotFoundError('Карточка или пользователь не найден или был запрошен несуществующий роут');
     }
 
     res.send(user);
@@ -125,11 +125,11 @@ const login = (req, res, next) => {
   User.findOne({ email }).select('+password')
     .then((user) => {
       if (user === null) {
-        throw new UnauthorizedError('Неправильная почта или пароль');
+        throw new UnauthorizedError('Передан неверный логин или пароль');
       } return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            throw new UnauthorizedError('Неправильная почта или пароль');
+            throw new UnauthorizedError('Передан неверный логин или пароль');
           } const token = jwt.sign({ _id: user._id }, 'secretkey', { expiresIn: '7d' });
           res.send({ token });
         });

@@ -4,7 +4,7 @@ function handleError(err, req, res, next) {
   let { message } = err;
 
   if (statusCode === 500) {
-    message = 'Ошибка на сервере';
+    message = 'На сервере произошла ошибка';
   }
 
   res.status(statusCode).send({ message });

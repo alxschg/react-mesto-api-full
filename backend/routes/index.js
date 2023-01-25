@@ -38,7 +38,7 @@ routes.use('/users', auth, users);
 routes.use('/cards', auth, cards);
 
 routes.all('*', (req, res, next) => {
-  next(new NotFoundError('Неверный адрес запроса'));
+  next(new NotFoundError('Карточка или пользователь не найден или был запрошен несуществующий роут'));
 });
 
 module.exports = { routes };
