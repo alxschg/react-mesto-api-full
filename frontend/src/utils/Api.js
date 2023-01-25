@@ -12,62 +12,62 @@ class Api {
     }
 
     getUserInfo(){
+        const token = localStorage.getItem("jwt");
         return fetch(`${this._baseUrl}/users/me`,
         {
-            headers: this._headers,
-            credentials: 'include'
+            headers: {...this._headers, authorization: `Bearer ${token}`}
         })
         .then(res => this._checkResponse(res))
     }
 
     getCards(){
+        const token = localStorage.getItem("jwt");
         return fetch(`${this._baseUrl}/cards`,{
-            headers: this._headers,
-            credentials: 'include'
+            headers: {...this._headers, authorization: `Bearer ${token}`}
         })
         .then(res => this._checkResponse(res))
     }
 
     editProfil({name, about}){
+        const token = localStorage.getItem("jwt");
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
-            headers: this._headers,
+            headers: {...this._headers, authorization: `Bearer ${token}`},
             body: JSON.stringify({
                 name,
                 about
-            }),
-            credentials: 'include'
+            })
         })
         .then(res => this._checkResponse(res));
     }
 
     addNewCard(data){
+        const token = localStorage.getItem("jwt");
         return fetch(`${this._baseUrl}/cards`, {
             method: 'POST',
-            headers: this._headers,
+            headers: {...this._headers, authorization: `Bearer ${token}`},
             body: JSON.stringify({
                 name: data.imageName,
                 link: data.imageLink
-            }),
-            credentials: 'include'
+            })
         })
         .then(res => this._checkResponse(res));
     }
 
     deleteCard(idCard){
+        const token = localStorage.getItem("jwt");
         return fetch(`${this._baseUrl}/cards/${idCard}`, {
             method: 'DELETE',
-            headers: this._headers,
-            credentials: 'include'
+            headers: {...this._headers, authorization: `Bearer ${token}`},
           })
             .then(res => this._checkResponse(res));
         }
     
     editAvatar(avatarLink){
+        const token = localStorage.getItem("jwt");
         return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: 'PATCH',
-            headers: this._headers,
-            credentials: 'include',
+            headers: {...this._headers, authorization: `Bearer ${token}`},
             body: JSON.stringify({
                 avatar: avatarLink
             })
@@ -76,19 +76,19 @@ class Api {
     }  
 
     putLike(idCard){
+        const token = localStorage.getItem("jwt");
         return fetch(`${this._baseUrl}/cards/${idCard}/likes`, {
             method: 'PUT',
-            headers: this._headers,
-            credentials: 'include'
+            headers: {...this._headers, authorization: `Bearer ${token}`},
         })
         .then(res => this._checkResponse(res));
     }
 
     deleteLike(idCard){
+        const token = localStorage.getItem("jwt");
         return fetch(`${this._baseUrl}/cards/${idCard}/likes`, {
             method: 'DELETE',
-            headers: this._headers,
-            credentials: 'include'
+            headers: {...this._headers, authorization: `Bearer ${token}`},
         })
         .then(res => this._checkResponse(res));
     }
@@ -104,7 +104,7 @@ class Api {
   }
   
   const api = new Api({
-    baseUrl: 'https://api.mesto.alxschg.nomoredomains.rocks/',
+    baseUrl: 'http://localhost:3000',
     headers: {
       'Content-Type': 'application/json'
     }

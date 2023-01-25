@@ -53,13 +53,6 @@ function App() {
     }
   }, [isOpen]);
 
-  useEffect(() => {
-    if (isLogged) {
-      api.getUserInfo().then(setCurrentUser).catch(console.error);
-      api.getCards().then(setCards).catch(console.error);
-    }
-  }, [isLogged]);
-
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   }
@@ -90,7 +83,7 @@ function App() {
         setIsInfoTooltipOpen(true);
         if (res) {
           setMessage(true);
-          history("/sign-in");
+          history("/signin");
         }
       })
       .catch(() => {
@@ -107,6 +100,7 @@ function App() {
           setIsLogged(true);
           history("/");
           localStorage.setItem("jwt", res.token);
+          console.log(`ТОКЕН ПРИ РЕГЕ ${res.token}`);
         }
       })
       .catch(() => {
@@ -117,25 +111,31 @@ function App() {
 
   function handleLogout() {
     localStorage.removeItem("jwt");
-    history("/sign-in");
+    history("/signin");
     setIsLogged(false);
   }
 
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    if (token) {
-      validityToken(token)
-        .then((res) => {
-          setEmail(res.data.email);
+      const token = localStorage.getItem("jwt");
+      if (token) {
+        validityToken(token)
+          .then((res) => {
+            setEmail(res.data.email);
+            setIsLogged(true);
+            history("/");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    }, [history]);
 
-          setIsLogged(true);
-          history("/");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  useEffect(() => {
+    if (isLogged) {
+      api.getUserInfo().then(setCurrentUser).catch(console.error);
+      api.getCards().then(setCards).catch(console.error);
     }
-  }, [history]);
+  }, [isLogged]);
 
   function handleUpdateUser(userInfo) {
     setIsLoading(true);
@@ -231,15 +231,15 @@ function App() {
             />
 
             <Route
-              path="/sign-up"
+              path="/signup"
               element={<Register onRegister={onRegister} />}
             />
 
-            <Route path="/sign-in" element={<Login onLogin={onLogin} />} />
+            <Route path="/signin" element={<Login onLogin={onLogin} />} />
             <Route
               path="*"
               element={
-                isLogged ? <Navigate to="/" /> : <Navigate to="/sign-in" />
+                isLogged ? <Navigate to="/" /> : <Navigate to="/signin" />
               }
             />
           </Routes>

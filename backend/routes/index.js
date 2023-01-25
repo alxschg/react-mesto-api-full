@@ -37,7 +37,7 @@ routes.post(
 routes.use('/users', auth, users);
 routes.use('/cards', auth, cards);
 
-routes.all('*', auth, (req, res, next) => {
+routes.all('*', (req, res, next) => {
   next(new NotFoundError('Неверный адрес запроса'));
 });
 

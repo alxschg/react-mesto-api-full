@@ -18,9 +18,9 @@ function Card({ card, likes, onCardClick, onCardLike, onCardDelete }) {
   const cardLikeButtonClassName = `element__like_active`;
 
   function handleClick() {
+    console.log(`Овнер: ${card.owner._id}`);
+    console.log(`ID: ${currentUser._id}`);
     onCardClick(card);
-    console.log(`currentUs ${currentUser._id}`);
-    console.log(`ownerUs ${card.owner._id}`);
   }
 
   function handleLikeClick() {

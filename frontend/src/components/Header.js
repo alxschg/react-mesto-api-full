@@ -19,14 +19,14 @@ function Header({ email, onLogout }) {
       </header>
     );
   }
-  if (location.pathname === "/sign-up") {
+  if (location.pathname === "/signup") {
     return (
       <header className="header">
         <img className="header__logo" src={logo} alt="logo" />
 
         <nav>
           <ul className="header__links">
-            <Link to="/sign-in" className="header__button">
+            <Link to="/signin" className="header__button">
               Войти
             </Link>
           </ul>
@@ -34,14 +34,14 @@ function Header({ email, onLogout }) {
       </header>
     );
   }
-  if (location.pathname === "/sign-in") {
+  if (location.pathname === "/signin") {
     return (
       <header className="header">
         <img className="header__logo" src={logo} alt="logo" />
 
         <nav>
           <ul className="header__links">
-            <Link to="/sign-up" className="header__button">
+            <Link to="/signup" className="header__button">
               Регистрация
             </Link>
           </ul>

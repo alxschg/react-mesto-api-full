@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const cors = require('cors');
+const path = require('path');
 
 const { routes } = require('./routes');
 const { handleError } = require('./middlewares/handleError');
@@ -21,24 +22,9 @@ mongoose.connect('mongodb://localhost:27017/mestodb')
     console.error(err);
   });
 
-const allowedCors = [
-  'http://mesto.alxschg.nomoredomains.rocks/',
-  'https://mesto.alxschg.nomoredomains.rocks/',
-  'http://localhost:3000',
-  'https://localhost:3000',
-];
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-const corsOptionsDelegate = (req, callback) => {
-  let corsOptions;
-  if (allowedCors.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true, credentials: true };
-  } else {
-    corsOptions = { origin: false, credentials: true };
-  }
-  callback(null, corsOptions);
-};
-
-app.use(cors(corsOptionsDelegate));
+app.use(cors());
 
 app.use(requestLogger);
 
