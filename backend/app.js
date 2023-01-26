@@ -22,7 +22,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb')
   });
 
 app.use(cors());
-
+console.log('test');
 app.use(requestLogger);
 
 app.use(express.json());
